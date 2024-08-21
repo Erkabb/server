@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
+const cors = require("cors");
 
 app.use(express.json()); //bodygoos ywulsn JSON datag object bolgon ywulna(middleware)
 // const users = [{ id: 1, name: "naraa", age: 20 }];
-
+app.use(cors());
 app.listen(8000, () => {
   console.log("server running at localhost:8000");
 });
