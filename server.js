@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const cors = require("cors");
+const { profile } = require("console");
 
 app.use(express.json()); //bodygoos ywulsn JSON datag object bolgon ywulna(middleware)
 // const users = [{ id: 1, name: "naraa", age: 20 }];
@@ -22,20 +23,20 @@ app.post("/users", (req, res) => {
   const data = fs.readFileSync("./users.json", { encoding: "utf8" });
   const { users } = JSON.parse(data);
   const adduser = {
-    id: users.length + 1,
-    name: req.body.name,
-    age: req.body.age,
+    eid: users.length + 1,
+    ...req.body,
   };
   users.push(adduser);
   fs.writeFileSync("./users.json", JSON.stringify({ users }));
   res.status(200).json({ users: adduser });
 });
 
-app.delete("/users/:id", (req, res) => {
+app.delete("/users/:eid", (req, res) => {
   const data = fs.readFileSync("./users.json", { encoding: "utf8" });
   const { users } = JSON.parse(data);
+
   const findIdx = users.findIndex(
-    (user) => user.id === parseInt(req.params.id)
+    (user) => user.eid === parseInt(req.params.eid)
   );
   if (findIdx > -1) {
     const deletedUser = users.splice(findIdx, 1);
